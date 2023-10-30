@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Slider</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<style>
+    .slider-container {
+        max-width: 800px;
+        margin: 0 auto;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .slider {
+        display: flex;
+        transition: transform 0.3s ease-in-out;
+    }
+    
+    img {
+        max-width: 100%;
+        height: auto;
+    }
+    
+    button {
+        background-color: #333;
+        color: #fff;
+        border: none;
+        padding: 10px 15px;
+        cursor: pointer;
+    }
+    
+    .indicator {
+        text-align: center;
+        margin-top: 10px;
+    }
+</style>
+
+<body style="font-family: 'Times New Roman', Times, serif; margin: 0; padding: 0; background: fixed;">
+    <div class="slider-container"><br>
+        <div class="slider">
+            <img src="car1.jpg" alt="car1 1">
+            <img src="car2.jpg" alt="car2 2">
+            <img src="car3.jpg" alt="car3 3">
+            <img src="car4.jpg" alt="car4 3">
+        </div><br>
+        <center>
+            <button class="prev">Previous</button>
+            <button class="next">Next</button>
+            <div class="indicator"></div>
+        </center>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            var $slider = $('.slider');
+            var $nextBtn = $('.next');
+            var $prevBtn = $('.prev');
+            var $indicator = $('.indicator');
+
+            var totalImages = $slider.find('img').length;
+            var currentIndex = 0;
+            updateIndicator();
+
+            $nextBtn.click(function() {
+                currentIndex = (currentIndex + 1) % totalImages;
+                updateSlider();
+                updateIndicator();
+            });
+
+            $prevBtn.click(function() {
+                currentIndex = (currentIndex - 1 + totalImages) % totalImages;
+                updateSlider();
+                updateIndicator();
+            });
+
+            function updateSlider() {
+                var translateX = -currentIndex * 100 + '%';
+                $slider.css('transform', 'translateX(' + translateX + ')');
+            }
+
+            function updateIndicator() {
+                $indicator.text((currentIndex + 1) + '/' + totalImages);
+            }
+        });
+    </script>
+</body>
+
+</html>
